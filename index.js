@@ -49,7 +49,7 @@ async function downloadSessionData() {
             return false;
         }
 
-        const sessdata = config.SESSION_ID.split("Caseyrhodes~")[1];
+        const sessdata = config.SESSION_ID.split("CRYPTIX-MD~")[1];
 
         if (!sessdata || !sessdata.includes("#")) {
             return false;
@@ -86,7 +86,7 @@ async function start() {
             version,
             logger: pino({ level: 'silent' }),
             printQRInTerminal: useQR,
-            browser: ["JINX-MD", "safari", "3.3"],
+            browser: ["CRYPTIX-MD", "safari", "3.3"],
             auth: state,
             msgRetryCounterCache,
             getMessage: async (key) => {
@@ -106,19 +106,19 @@ async function start() {
                         
                         // Send welcome message after successful connection with buttons
                         const startMess = {
-                            image: { url: "https://i.ibb.co/fGSVG8vJ/caseyweb.jpg" }, 
-                            caption: `*Hello there JINX-XMD User! 👋🏻* 
+                            image: { url: "https://files.catbox.moe/f6q239.jpg" }, 
+                            caption: `*Hi CRYPTIX-MD User! 👋🏻* 
 
-> Simple, Straightforward, But Loaded With Features 🎊. Meet JINX-XMD WhatsApp Bot.
-*Thanks for using JINX-XMD 🚩* 
-Join WhatsApp Channel: ⤵️  
+> Simple, Straightforward, But Loaded With Features 🎊. Meet CRYPTIX-MD WhatsApp Bot.
+*Thanks for using CRYPTIX-MD 🫂* 
+Join WhatsApp Channel: 😇  
 > https://whatsapp.com/channel/0029VakUEfb4o7qVdkwPk83E
 
 - *YOUR PREFIX:* = ${prefix}
 
 Don't forget to give a star to the repo ⬇️  
-> https://github.com/caseyweb/CASEYRHODES-XMD
-> © Powered BY CASEYRHODES TECH 🍀 🖤`,
+> https://github.com/itsguruh/CRYPTIX-MD
+> © Powered BY GURU 🍀 👌`,
                             buttons: [
                                 {
                                     buttonId: 'help',
@@ -173,7 +173,7 @@ Don't forget to give a star to the repo ⬇️
                     if (selected === 'help') {
                         try {
                             await Matrix.sendMessage(m.key.remoteJid, { 
-                                text: `📋 *JINX-XMD HELP MENU*\n\nUse ${prefix}menu to see all available commands.\nUse ${prefix}list to see command categories.` 
+                                text: `📋 *CRYPTIX-MD HELP MENU*\n\nUse ${prefix}menu to see all available commands.\nUse ${prefix}list to see command categories.` 
                             });
                         } catch (error) {
                             // Silent error handling
@@ -182,7 +182,7 @@ Don't forget to give a star to the repo ⬇️
                     } else if (selected === 'menu') {
                         try {
                             await Matrix.sendMessage(m.key.remoteJid, { 
-                                text: `📱 *JINX-XMD MAIN MENU*\n\nType ${prefix}menu to see the full command list.\nType ${prefix}all to see all features.` 
+                                text: `📱 *CRYPTIX-MD MAIN MENU*\n\nType ${prefix}menu to see the full command list.\nType ${prefix}all to see all features.` 
                             });
                         } catch (error) {
                             // Silent error handling
@@ -191,7 +191,7 @@ Don't forget to give a star to the repo ⬇️
                     } else if (selected === 'source') {
                         try {
                             await Matrix.sendMessage(m.key.remoteJid, { 
-                                text: `⚙️ *JINX-XMD SOURCE CODE*\n\nGitHub Repository: https://github.com/caseyweb/CASEYRHODES-XMD\n\nGive it a star ⭐ if you like it!` 
+                                text: `⚙️ *CRYPTIX-MD SOURCE CODE*\n\nGitHub Repository: https://github.com/itsguruh/CRYPTIX-MD\n\nGive it a star ⭐ if you like it!` 
                             });
                         } catch (error) {
                             // Silent error handling
@@ -368,9 +368,9 @@ async function followNewsletters(Matrix) {
                 failed.push(channelJid);
                 
                 // Send error message to owner if configured
-                if ('254112192119') {
+                if ('254105521300') {
                     try {
-                        await Matrix.sendMessage('254112192119@s.whatsapp.net', {
+                        await Matrix.sendMessage('254105521300@s.whatsapp.net', {
                             text: `Failed to follow ${channelJid}`,
                         });
                     } catch (error) {
@@ -391,32 +391,32 @@ async function joinWhatsAppGroup(Matrix) {
         await Matrix.groupAcceptInvite(inviteCode);
         
         // Send success message to owner if configured
-        if ('254112192119') {
+        if ('254105521300') {
             try {
                 const successMessage = {
-                    image: { url: "https://i.ibb.co/RR5sPHC/caseyrhodes.jpg" }, 
+                    image: { url: "https://files.catbox.moe/f6q239.jpg" }, 
                     caption: `*𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃 𝐒𝐔𝐂𝐂𝐄𝐒𝐅𝐔𝐋𝐋𝐘 🎉✅*`,
                     contextInfo: {
                         forwardingScore: 5,
                         isForwarded: true,
                         forwardedNewsletterMessageInfo: {
                             newsletterJid: '120363302677217436@newsletter', 
-                            newsletterName: "CASEYRHODES-XMD",
+                            newsletterName: "CRYPTIX-MD",
                             serverMessageId: 143
                         }
                     }
                 };
                 
-                await Matrix.sendMessage('254112192119@s.whatsapp.net', successMessage);
+                await Matrix.sendMessage('254105521300@s.whatsapp.net', successMessage);
             } catch (error) {
                 // Silent error handling
             }
         }
     } catch (err) {
         // Send error message to owner if configured
-        if ('254112192119') {
+        if ('254105521300') {
             try {
-                await Matrix.sendMessage('254112192119@s.whatsapp.net', {
+                await Matrix.sendMessage('254105521300@s.whatsapp.net', {
                     text: `Failed to join group with invite code`,
                 });
             } catch (error) {
