@@ -112,7 +112,7 @@ async function start() {
 > Simple, Straightforward, But Loaded With Features 🎊. Meet CRYPTIX-MD WhatsApp Bot.
 *Thanks for using CRYPTIX-MD 🫂* 
 Join WhatsApp Channel: 😇  
-> https://whatsapp.com/channel/0029VakUEfb4o7qVdkwPk83E
+> https://whatsapp.com/channel/0029VbAaqOjLCoX3uQD1Ns3y
 
 - *YOUR PREFIX:* = ${prefix}
 
