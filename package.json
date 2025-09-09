@@ -1,7 +1,7 @@
 {
-  "name": "Caseyrhodes-AI",
+  "name": "CRYPTIX-MD",
   "version": "10.8.1",
-  "description": "Caseyrhodes-AI latest multi device whatsapp bot",
+  "description": "Cryptix-md latest multi device whatsapp bot",
   "main": "index.js",
   "engines": {
   "node": ">=20.x",
@@ -9,12 +9,12 @@
   },
   "type": "module",
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name CASEYRHODES-AI",
+    "start": "pm2 start index.js --deep-monitoring --attach --name CRYPTIX-MD",
     "stop": "pm2 stop ",
-    "restart": "pm2 restart CASEYRHODES-AI"
+    "restart": "pm2 restart CRYPTIX-MD"
   },
-  "keywords": ["CASEYRHODES-AI", "whatsapp-bot", "whatsapp md bot"],
-  "author": "Caseyrhodes",
+  "keywords": ["CRYPTIX-MD", "whatsapp-bot", "whatsapp md bot"],
+  "author": "itsguruh",
   "license": "ISC",
   "dependencies": {
     "@whiskeysockets/baileys": "npm:@rexxhayanasi/elaina-bail",
