@@ -12,7 +12,6 @@
 | [![CRYPTIX MD](https://files.catbox.moe/32nmpf.jpg)](https://github.com/itsguruh/CRYPTIX-MD)|
 |----|
 
-
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Rockstar-ExtraBold&size=30&pause=1000&color=0000FF&center=true&vCenter=true&width=501&height=60&lines=𝗪𝗘𝗟𝗖𝗢𝗠𝗘+𝗧𝗢+CRYPTIX+MD!)](https://git.io/blinking-svg)
 
    [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Rockstar-ExtraBold&color=F33A7A&lines=FORK+AND+MAYBE+GIVE+US+A+STAR)](https://git.io/typing-svg)
@@ -49,6 +48,11 @@
 
 1. 𝐆𝐄𝐓 𝐒𝐄𝐒𝐒𝐈𝐎𝐍 𝐈𝐃 𝐅𝐑𝐎𝐌 𝐒𝐄𝐑𝐕𝐄𝐑  
 <a href="https://cryptix-md-3210ab63a8e2.herokuapp.com/"><img title="GET-SESSION ID HERE" src="https://img.shields.io/badge/GET-SESSION ID HERE-h?color=green&style=for-the-badge&logo=nike" width="230" height="38.45"/></a></p>  
+
+2. 𝐆𝐄𝐍𝐄𝐑𝐀𝐓𝐄 𝐏𝐀𝐈𝐑𝐈𝐍𝐆 𝐂𝐎𝐃𝐄  
+<p align="center">
+<a href="https://cryptix-md-3210ab63a8e2.herokuapp.com/pair?number=YOUR_NUMBER"><img title="GET-PAIRING CODE" src="https://img.shields.io/badge/GET-PAIRING CODE-h?color=blue&style=for-the-badge&logo=whatsapp" width="230" height="38.45"/></a>
+</p>
 
 ---
 
