@@ -7,7 +7,6 @@
     "node": ">=20.x",
     "npm": ">=10.x"
   },
-  "type": "commonjs",
   "scripts": {
     "start": "node app.js",
     "stop": "pm2 stop CRYPTIX-MD",
