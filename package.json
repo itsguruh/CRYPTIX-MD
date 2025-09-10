@@ -4,8 +4,8 @@
   "description": "Cryptix-md latest multi device whatsapp bot",
   "main": "app.js",
   "engines": {
-    "node": ">=20.x",
-    "npm": ">=10.x"
+    "node": "20.x",
+    "npm": "10.x"
   },
   "scripts": {
     "start": "node app.js",
