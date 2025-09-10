@@ -48,7 +48,7 @@
 #### 𝐒𝐄𝐓𝐔𝐏
 
 1. 𝐆𝐄𝐓 𝐒𝐄𝐒𝐒𝐈𝐎𝐍 𝐈𝐃 𝐅𝐑𝐎𝐌 𝐒𝐄𝐑𝐕𝐄𝐑  
-<a href="https://cryptixzessions-780e6ec1bf18.herokuapp.com/"><img title="GET-SESSION ID HERE" src="https://img.shields.io/badge/GET-SESSION ID HERE-h?color=green&style=for-the-badge&logo=nike" width="230" height="38.45"/></a></p>  
+<a href="https://cryptix-md-3210ab63a8e2.herokuapp.com/"><img title="GET-SESSION ID HERE" src="https://img.shields.io/badge/GET-SESSION ID HERE-h?color=green&style=for-the-badge&logo=nike" width="230" height="38.45"/></a></p>  
 
 ## 𝐅𝐎𝐑 𝐎𝐍𝐄-𝐓𝐀𝐏 𝐃𝐄𝐏𝐋𝐎𝐘𝐌𝐄𝐍𝐓 𝐔𝐒𝐄 𝐓𝐇𝐈𝐒 𝐁𝐔𝐓𝐓𝐎𝐍
 
