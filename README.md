@@ -1,4 +1,3 @@
-<!-- Glowing Header -->
 <p align="center">
   <img src="https://i.imgur.com/dBaSKWF.gif" height="40" width="100%">
 </p>
@@ -51,7 +50,7 @@
 
 2. 𝐆𝐄𝐍𝐄𝐑𝐀𝐓𝐄 𝐏𝐀𝐈𝐑𝐈𝐍𝐆 𝐂𝐎𝐃𝐄  
 <p align="center">
-<a href="https://cryptix-md-3210ab63a8e2.herokuapp.com/pair?number=YOUR_NUMBER"><img title="GET-PAIRING CODE" src="https://img.shields.io/badge/GET-PAIRING CODE-h?color=blue&style=for-the-badge&logo=whatsapp" width="230" height="38.45"/></a>
+<a href="https://cryptix10-c733f0aa9b30.herokuapp.com/"><img title="GET-PAIRING CODE" src="https://img.shields.io/badge/GET-PAIRING CODE-h?color=blue&style=for-the-badge&logo=whatsapp" width="230" height="38.45"/></a>
 </p>
 
 ---
@@ -59,6 +58,7 @@
 ## 🚀 Deployment Guide (Heroku)
 
 Your pairing server runs on **Node.js + Express**.  
-To make sure it works on Heroku, follow these steps:
+To make sure it w
+orks on Heroku, follow these steps:
 
 ### 📂 Project Structure
