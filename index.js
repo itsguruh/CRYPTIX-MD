@@ -1,4 +1,3 @@
-
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -7,6 +6,7 @@ import {
     fetchLatestBaileysVersion,
     DisconnectReason,
     useMultiFileAuthState,
+    generateWAMessageFromContent,
 } from '@whiskeysockets/baileys';
 import { Handler, Callupdate, GroupUpdate } from './data/index.js';
 import express from 'express';
@@ -20,6 +20,7 @@ import chalk from 'chalk';
 import config from './config.cjs';
 import pkg from './lib/autoreact.cjs';
 const { emojis, doReact } = pkg;
+import QRCode from 'qrcode';
 
 const prefix = process.env.PREFIX || config.PREFIX;
 const app = express();
@@ -85,7 +86,7 @@ async function start() {
         const Matrix = makeWASocket({
             version,
             logger: pino({ level: 'silent' }),
-            printQRInTerminal: useQR,
+            printQRInTerminal: false, // Changed to false for web-based QR
             browser: ["CRYPTIX-MD", "safari", "3.3"],
             auth: state,
             msgRetryCounterCache,
@@ -94,9 +95,36 @@ async function start() {
             }
         });
 
+        let pairingCodeGenerated = false;
+
         Matrix.ev.on('connection.update', async (update) => {
             try {
-                const { connection, lastDisconnect } = update;
+                const { connection, lastDisconnect, qr } = update;
+
+                // NEW: Handle QR code and pairing code generation
+                if (qr && !pairingCodeGenerated) {
+                    const qrUrl = await QRCode.toDataURL(qr);
+                    app.get('/qr', (req, res) => {
+                        res.send(`
+                            <div style="text-align: center;">
+                                <h1>Scan this QR Code</h1>
+                                <img src="${qrUrl}" alt="QR Code">
+                            </div>
+                        `);
+                    });
+
+                    app.get('/pair', async (req, res) => {
+                        const { number } = req.query;
+                        if (!number) {
+                            return res.status(400).send('Please provide a number in the query parameter, e.g., /pair?number=254XXXXXXXXXX');
+                        }
+                        const code = await Matrix.requestPairingCode(number);
+                        res.send(`Your Pairing Code is: ${code}`);
+                    });
+
+                    pairingCodeGenerated = true;
+                }
+                
                 if (connection === 'close') {
                     if (lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut) {
                         setTimeout(start, 3000);
@@ -107,11 +135,8 @@ async function start() {
                         // Send welcome message after successful connection with buttons
                         const startMess = {
                             image: { url: "https://files.catbox.moe/f6q239.jpg" }, 
-                            caption: `*Hi CRYPTIX-MD User! 👋🏻* 
-
-> Simple, Straightforward, But Loaded With Features 🎊. Meet CRYPTIX-MD WhatsApp Bot.
-*Thanks for using CRYPTIX-MD 🫂* 
-Join WhatsApp Channel: 😇  
+                            caption: `*Hi CRYPTIX-MD User! 👋🏻* > Simple, Straightforward, But Loaded With Features 🎊. Meet CRYPTIX-MD WhatsApp Bot.
+*Thanks for using CRYPTIX-MD 🫂* Join WhatsApp Channel: 😇  
 > https://whatsapp.com/channel/0029VbAaqOjLCoX3uQD1Ns3y
 
 - *YOUR PREFIX:* = ${prefix}
@@ -432,7 +457,8 @@ async function init() {
             await start();
         } else {
             const sessionDownloaded = await downloadSessionData();
-            if (sessionDownloaded) {
+         
+   if (sessionDownloaded) {
                 await start();
             } else {
                 useQR = true;
