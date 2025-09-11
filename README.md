@@ -27,7 +27,7 @@
 <p/>
 
  <p align="center">
-  <a href="https://cryptixzessions-780e6ec1bf18.herokuapp.com/">
+  <a href="https://cryptix10-c733f0aa9b30.herokuapp.com/">
     <img src="https://img.shields.io/badge/GET-SESSION ID HERE-h?color=green&style=for-the-badge&logo=nike" width="230" height="38.45"/>
   </a>
    
@@ -45,10 +45,7 @@
 
 #### 𝐒𝐄𝐓𝐔𝐏
 
-1. 𝐆𝐄𝐓 𝐒𝐄𝐒𝐒𝐈𝐎𝐍 𝐈𝐃 𝐅𝐑𝐎𝐌 𝐒𝐄𝐑𝐕𝐄𝐑  
-<a href="https://cryptix10-c733f0aa9b30.herokuapp.com/"><img title="GET-SESSION ID HERE" src="https://img.shields.io/badge/GET-SESSION ID HERE-h?color=green&style=for-the-badge&logo=nike" width="230" height="38.45"/></a></p>  
-
-2. 𝐆𝐄𝐍𝐄𝐑𝐀𝐓𝐄 𝐏𝐀𝐈𝐑𝐈𝐍𝐆 𝐂𝐎𝐃𝐄  
+1. 𝐆𝐄𝐍𝐄𝐑𝐀𝐓𝐄 𝐏𝐀𝐈𝐑𝐈𝐍𝐆 𝐂𝐎𝐃𝐄  
 <p align="center">
 <a href="https://cryptix10-c733f0aa9b30.herokuapp.com/"><img title="GET-PAIRING CODE" src="https://img.shields.io/badge/GET-PAIRING CODE-h?color=blue&style=for-the-badge&logo=whatsapp" width="230" height="38.45"/></a>
 </p>
