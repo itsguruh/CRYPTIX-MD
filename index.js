@@ -23,14 +23,12 @@ const { emojis, doReact } = pkg;
 
 const prefix = process.env.PREFIX || config.PREFIX;
 const app = express();
-let useQR = false;
 let initialConnection = true;
 const PORT = process.env.PORT || 3000;
 const startTime = new Date();
 
 const MAIN_LOGGER = pino({ level: process.env.LOG_LEVEL || 'info' });
 const logger = MAIN_LOGGER.child({});
-// Make sure logger has a valid level
 if (process.env.LOG_LEVEL) logger.level = process.env.LOG_LEVEL;
 
 const msgRetryCounterCache = new NodeCache();
@@ -50,7 +48,6 @@ async function downloadSessionData() {
         if (!config.SESSION_ID) {
             return false;
         }
-        // Expect SESSION_ID like "CRYPTIX-MD~<fileID>#<decryptKey>"
         const sessdata = config.SESSION_ID.split("CRYPTIX-MD~")[1];
         if (!sessdata || !sessdata.includes("#")) {
             return false;
@@ -74,11 +71,10 @@ async function downloadSessionData() {
 
 async function start() {
     try {
-        // Try downloading session if SESSION_ID provided
         await downloadSessionData();
 
         const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
-        const { version, isLatest } = await fetchLatestBaileysVersion();
+        const { version } = await fetchLatestBaileysVersion();
 
         const Matrix = makeWASocket({
             version,
@@ -87,7 +83,7 @@ async function start() {
             browser: ["CRYPTIX-MD", "Safari", "3.3"],
             auth: state,
             msgRetryCounterCache,
-            getMessage: async (key) => ({})
+            getMessage: async () => ({})
         });
 
         let pairingCodeGenerated = false;
@@ -102,29 +98,19 @@ async function start() {
                         res.send(`
                             <div style="text-align: center;">
                                 <h1>Scan this QR Code</h1>
-                                <img src="${qrUrl}" alt="QR Code">
+                                <img src="${qrUrl}" alt="QR Code" />
                             </div>
                         `);
-                    });
-
-                    app.get('/pair', async (req, res) => {
-                        const { number } = req.query;
-                        if (!number) {
-                            return res.status(400).send('Please provide a number in the query parameter, e.g., /pair?number=254XXXXXXXXXX');
-                        }
-                        const code = await Matrix.requestPairingCode(number);
-                        res.send({ code });
                     });
 
                     pairingCodeGenerated = true;
                 }
 
                 if (connection === 'close') {
-                    // Only reconnect if NOT logged out
                     if (lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut) {
                         setTimeout(start, 3000);
                     } else {
-                        console.log("Logged out from WhatsApp. Please reauthenticate manually.");
+                        console.log("Logged out. Please reauthenticate manually.");
                     }
                 } else if (connection === 'open') {
                     if (initialConnection) {
@@ -146,7 +132,6 @@ async function start() {
                         initialConnection = false;
                     }
                 }
-
             } catch (err) {
                 console.error("Error in connection.update handler:", err);
             }
@@ -154,23 +139,18 @@ async function start() {
 
         Matrix.ev.on('creds.update', saveCreds);
 
-        // Message handlers
         Matrix.ev.on("messages.upsert", async (chatUpdate) => {
             try {
                 const m = chatUpdate.messages[0];
                 if (!m || !m.message) return;
 
-                const messageText = m.message.conversation
-                    || m.message.extendedTextMessage?.text
-                    || "";
+                const messageText = m.message.conversation || m.message.extendedTextMessage?.text || "";
 
                 if (messageText.startsWith(prefix)) {
                     const command = messageText.slice(prefix.length).trim().split(/\s+/).shift().toLowerCase();
-                    // You may want to import a commands map and call proper plugin
                     if (command === 'ping') {
                         await Matrix.sendMessage(m.key.remoteJid, { text: 'Pong! 🏓' });
-                    }
-                    else if (command === 'uptime') {
+                    } else if (command === 'uptime') {
                         const uptimeInSeconds = Math.floor((Date.now() - startTime) / 1000);
                         const hours = Math.floor(uptimeInSeconds / 3600);
                         const minutes = Math.floor((uptimeInSeconds % 3600) / 60);
@@ -201,18 +181,15 @@ async function start() {
                     }
                 }
 
-                // Auto react if configured
                 if (config.AUTO_REACT === 'true' && !m.key.fromMe) {
                     const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
                     await doReact(randomEmoji, m, Matrix);
                 }
-
             } catch (err) {
                 console.error("Error in messages.upsert handler:", err);
             }
         });
 
-        // Call updates
         Matrix.ev.on('call', (json) => {
             try {
                 Callupdate(json, Matrix);
@@ -221,7 +198,6 @@ async function start() {
             }
         });
 
-        // Group updates
         Matrix.ev.on('group-participants.update', (messag) => {
             try {
                 GroupUpdate(Matrix, messag);
@@ -230,7 +206,7 @@ async function start() {
             }
         });
 
-        startExpress(); // Start the HTTP server
+        startExpress();
 
     } catch (error) {
         console.error("Error in start():", error);
