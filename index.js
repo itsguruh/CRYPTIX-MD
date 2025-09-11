@@ -19,6 +19,7 @@ import {
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 const sessionDir = path.join(__dirname, 'session');
 const credsPath = path.join(sessionDir, 'creds.json');
 
@@ -27,22 +28,48 @@ if (!fs.existsSync(sessionDir)) {
 }
 
 async function start() {
-  // Dynamic import of config
-  const configImport = await import('./config.cjs');
-  const config = configImport.default || configImport;
+  // import config
+  let config;
+  try {
+    const configModule = await import('./config.cjs');
+    config = configModule.default || configModule;
+  } catch (err) {
+    console.error('Error importing config.cjs:', err);
+    process.exit(1);
+  }
 
-  // Dynamic import of other modules with full paths
-  const dataModule = await import('./data/index.js');
-  const { Handler, Callupdate, GroupUpdate } = dataModule;
+  // import data/index.js
+  let Handler, Callupdate, GroupUpdate;
+  try {
+    const dataMod = await import('./data/index.js');
+    Handler = dataMod.Handler;
+    Callupdate = dataMod.Callupdate;
+    GroupUpdate = dataMod.GroupUpdate;
+  } catch (err) {
+    console.error('Error importing ./data/index.js:', err);
+    process.exit(1);
+  }
 
-  const arModule = await import('./lib/autoreact.cjs');
-  const pkg = arModule.default || arModule;
-  const { emojis, doReact } = pkg;
+  // import autoreact module
+  let pkg, emojis, doReact;
+  try {
+    const ar = await import('./lib/autoreact.cjs');
+    pkg = ar.default || ar;
+    emojis = pkg.emojis;
+    doReact = pkg.doReact;
+  } catch (err) {
+    console.error('Error importing ./lib/autoreact.cjs:', err);
+    process.exit(1);
+  }
 
   const prefix = process.env.PREFIX || config.PREFIX;
   const PORT = process.env.PORT || config.PORT;
+  const startTime = new Date();
 
   const logger = pino({ level: process.env.LOG_LEVEL || config.LOG_LEVEL });
+  if (process.env.LOG_LEVEL) {
+    logger.level = process.env.LOG_LEVEL;
+  }
 
   const msgRetryCounterCache = new NodeCache();
   const app = express();
@@ -50,7 +77,7 @@ async function start() {
   async function downloadSessionData() {
     try {
       if (!config.SESSION_ID) return false;
-      const parts = config.SESSION_ID.split('CRYPTIX-MD~')[1];
+      const parts = config.SESSION_ID.split('CRYPTIX‑MD~')[1];
       if (!parts || !parts.includes('#')) return false;
       const [fileID, decryptKey] = parts.split('#');
       const url = `https://mega.nz/file/${fileID}#${decryptKey}`;
@@ -61,7 +88,7 @@ async function start() {
       await fs.promises.writeFile(credsPath, data);
       return true;
     } catch (err) {
-      console.error('Error downloading session:', err);
+      console.error('Error in downloadSessionData:', err);
       return false;
     }
   }
@@ -75,10 +102,10 @@ async function start() {
     version,
     logger: pino({ level: process.env.LOG_LEVEL || 'silent' }),
     printQRInTerminal: false,
-    browser: ['CRYPTIX-MD', 'Safari', '3.3'],
+    browser: ['CRYPTIX‑MD', 'Safari', '3.3'],
     auth: state,
     msgRetryCounterCache,
-    getMessage: async () => ({}),
+    getMessage: async () => ({})
   });
 
   let initialConnection = true;
@@ -105,7 +132,7 @@ async function start() {
         if (lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut) {
           setTimeout(start, 3000);
         } else {
-          console.log('Logged out. Please reauthenticate manually.');
+          console.log('Logged out. Reauthenticate manually.');
         }
       } else if (connection === 'open' && initialConnection) {
         const startMess = {
@@ -116,7 +143,7 @@ async function start() {
             { buttonId: 'menu', buttonText: { displayText: '📱 MENU' }, type: 1 },
             { buttonId: 'source', buttonText: { displayText: '⚙️ SOURCE' }, type: 1 }
           ],
-          headerType: 1,
+          headerType: 1
         };
         await socket.sendMessage(socket.user.id, startMess).catch(console.error);
         initialConnection = false;
@@ -139,8 +166,8 @@ async function start() {
         if (cmd === 'ping') {
           await socket.sendMessage(m.key.remoteJid, { text: 'Pong! 🏓' });
         } else if (cmd === 'uptime') {
-          const uptime = Math.floor((Date.now() - process.uptime()) / 1000);
-          await socket.sendMessage(m.key.remoteJid, { text: `Uptime: ${uptime} seconds.` });
+          const uptimeSeconds = Math.floor((Date.now() - startTime) / 1000);
+          await socket.sendMessage(m.key.remoteJid, { text: `Uptime: ${uptimeSeconds} s` });
         }
       }
 
@@ -152,10 +179,10 @@ async function start() {
       if (m.message.buttonsResponseMessage) {
         const selected = m.message.buttonsResponseMessage.selectedButtonId;
         if (selected === 'help') {
-          await socket.sendMessage(m.key.remoteJid, { text: `📋 Help Menu - use ${prefix}menu.` });
+          await socket.sendMessage(m.key.remoteJid, { text: `📋 Help Menu\nUse ${prefix}menu` });
         } else if (selected === 'source') {
           await socket.sendMessage(m.key.remoteJid, {
-            text: `⚙️ Source Code:\n${config.SOURCE_URL}`
+            text: `⚙️ *Source Code*\n${config.SOURCE_URL}`
           });
         }
       }
@@ -169,11 +196,11 @@ async function start() {
     }
   });
 
-  socket.ev.on('group-participants.update', (groupUpdate) => {
+  socket.ev.on('group-participants.update', (grp) => {
     try {
-      GroupUpdate(socket, groupUpdate);
+      GroupUpdate(socket, grp);
     } catch (err) {
-      console.error('Error in group update:', err);
+      console.error('Error in group participants update:', err);
     }
   });
 
@@ -186,7 +213,7 @@ async function start() {
   });
 
   app.get('/', (req, res) => {
-    res.send('CRYPTIX-MD Bot is running ✔️');
+    res.send('CRYPTIX‑MD Bot is running ✔️');
   });
 
   app.listen(PORT, () => {
@@ -195,6 +222,6 @@ async function start() {
 }
 
 start().catch(err => {
-  console.error('Fatal error on startup:', err);
+  console.error('Fatal error startup:', err);
   process.exit(1);
 });
