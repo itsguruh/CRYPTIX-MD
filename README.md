@@ -42,48 +42,4 @@ This bot is built with cutting-edge technologies to ensure stability and perform
     <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
   </a>
   <a href="https://www.heroku.com/" target="_blank">
-    <img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white" alt="Heroku">
-  </a>
-</p>
-
----
-
-## 🚀 Deployment
-
-The fastest way to get your own instance of **CRYPTIX MD** running is through Heroku.
-
-### 1. **Fork the Repository**
-<p align="center">
-  <a href='https://github.com/itsguruh/CRYPTIX-MD/fork' target="_blank">
-    <img alt='Fork repo' src='https://img.shields.io/badge/Fork-This_Repo-2d8c36?style=for-the-badge&logo=git&logoColor=white'/>
-  </a>
-</p>
-
-### 2. **Generate Your Pairing Code**
-<p align="center">
-  <a href="https://cryptix10-c733f0aa9b30.herokuapp.com/">
-    <img src="https://img.shields.io/badge/GET-PAIRING_CODE-h?color=2196F3&style=for-the-badge&logo=whatsapp" width="230" height="38.45"/>
-  </a>
-</p>
-
----
-
-## 🌐 Social Presence
-
-Connect with our community for support, updates, and more.
-
-<p align="center">
-  <a href="https://chat.whatsapp.com/D9hokK6OHS5C3eLEwPKjsJ" target="_blank">
-    <img src="https://img.shields.io/badge/WhatsApp%20Group-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="WhatsApp Group">
-  </a>
-  <a href="https://wa.me/254105521300" target="_blank">
-    <img src="https://img.shields.io/badge/Chat%20on%20WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="Chat Us">
-  </a>
-</p>
-
----
-<p align="center">
-  <a href="https://github.com/itsguruh" target="_blank">
-    <img src="https://user-images.githubusercontent.com/62628408/195156322-a9b0c722-e4d0-449e-8c31-645391500300.gif" alt="Creator: Official Guru" height="30" />
-  </a>
-</p>
+    <img src="
