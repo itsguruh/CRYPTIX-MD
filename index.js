@@ -27,6 +27,7 @@ const app = express();
 let useQR = false;
 let initialConnection = true;
 const PORT = process.env.PORT || 3000;
+const startTime = new Date(); // NEW: Variable to track bot's start time
 
 const MAIN_LOGGER = pino({ level: 'silent' });
 const logger = MAIN_LOGGER.child({});
@@ -86,7 +87,7 @@ async function start() {
         const Matrix = makeWASocket({
             version,
             logger: pino({ level: 'silent' }),
-            printQRInTerminal: false, // Changed to false for web-based QR
+            printQRInTerminal: false,
             browser: ["CRYPTIX-MD", "safari", "3.3"],
             auth: state,
             msgRetryCounterCache,
@@ -101,7 +102,6 @@ async function start() {
             try {
                 const { connection, lastDisconnect, qr } = update;
 
-                // NEW: Handle QR code and pairing code generation
                 if (qr && !pairingCodeGenerated) {
                     const qrUrl = await QRCode.toDataURL(qr);
                     app.get('/qr', (req, res) => {
@@ -132,9 +132,9 @@ async function start() {
                 } else if (connection === 'open') {
                     if (initialConnection) {
                         
-                        // Send welcome message after successful connection with buttons
+                        // Send welcome message with a new image
                         const startMess = {
-                            image: { url: "https://files.catbox.moe/f6q239.jpg" }, 
+                            image: { url: "https://files.catbox.moe/f6q239.jpg" },
                             caption: `*Hi CRYPTIX-MD User! 👋🏻* > Simple, Straightforward, But Loaded With Features 🎊. Meet CRYPTIX-MD WhatsApp Bot.
 *Thanks for using CRYPTIX-MD 🫂* Join WhatsApp Channel: 😇  
 > https://whatsapp.com/channel/0029VbAaqOjLCoX3uQD1Ns3y
@@ -191,6 +191,33 @@ Don't forget to give a star to the repo ⬇️
             try {
                 const m = chatUpdate.messages[0];
                 if (!m || !m.message) return;
+
+                // NEW: Handle new commands like !ping and !uptime
+                const body = m.message.conversation || m.message.extendedTextMessage?.text || "";
+                if (body.startsWith(prefix)) {
+                    const command = body.slice(prefix.length).trim().split(/\s+/).shift().toLowerCase();
+                    const args = body.slice(prefix.length).trim().split(/\s+/).slice(1);
+
+                    switch (command) {
+                        case 'ping':
+                            await Matrix.sendMessage(m.key.remoteJid, { text: 'Pong! 🏓' });
+                            break;
+                        case 'uptime':
+                        case 'runtime':
+                            const uptimeInSeconds = Math.floor((new Date() - startTime) / 1000);
+                            const hours = Math.floor(uptimeInSeconds / 3600);
+                            const minutes = Math.floor((uptimeInSeconds % 3600) / 60);
+                            const seconds = uptimeInSeconds % 60;
+                            await Matrix.sendMessage(m.key.remoteJid, { text: `My runtime is ${hours}h ${minutes}m ${seconds}s. 🚀` });
+                            break;
+                    }
+                }
+                
+                // NEW: Handle simple auto-replies
+                const lowerBody = body.toLowerCase();
+                if (lowerBody.includes("hello") || lowerBody.includes("hi")) {
+                    await Matrix.sendMessage(m.key.remoteJid, { text: "Hello! How can I assist you today? 😊" });
+                }
 
                 // Handle button responses
                 if (m.message.buttonsResponseMessage) {
@@ -364,118 +391,4 @@ Don't forget to give a star to the repo ⬇️
 async function followNewsletters(Matrix) {
     try {
         const newsletterChannels = [
-            "120363299029326322@newsletter",
-            "120363402973786789@newsletter",
-            "120363339980514201@newsletter",
-        ];
-        
-        let followed = [];
-        let alreadyFollowing = [];
-        let failed = [];
-
-        for (const channelJid of newsletterChannels) {
-            try {
-                // Try to get newsletter metadata
-                try {
-                    const metadata = await Matrix.newsletterMetadata(channelJid);
-                    if (!metadata.viewer_metadata) {
-                        await Matrix.newsletterFollow(channelJid);
-                        followed.push(channelJid);
-                    } else {
-                        alreadyFollowing.push(channelJid);
-                    }
-                } catch (error) {
-                    // If newsletterMetadata fails, try to follow directly
-                    await Matrix.newsletterFollow(channelJid);
-                    followed.push(channelJid);
-                }
-            } catch (error) {
-                failed.push(channelJid);
-                
-                // Send error message to owner if configured
-                if ('254105521300') {
-                    try {
-                        await Matrix.sendMessage('254105521300@s.whatsapp.net', {
-                            text: `Failed to follow ${channelJid}`,
-                        });
-                    } catch (error) {
-                        // Silent error handling
-                    }
-                }
-            }
-        }
-    } catch (error) {
-        // Silent error handling
-    }
-}
-
-// Group joining function
-async function joinWhatsAppGroup(Matrix) {
-    try {
-        const inviteCode = "CaOrkZjhYoEDHIXhQQZhfo";
-        await Matrix.groupAcceptInvite(inviteCode);
-        
-        // Send success message to owner if configured
-        if ('254105521300') {
-            try {
-                const successMessage = {
-                    image: { url: "https://files.catbox.moe/f6q239.jpg" }, 
-                    caption: `*𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃 𝐒𝐔𝐂𝐂𝐄𝐒𝐅𝐔𝐋𝐋𝐘 🎉✅*`,
-                    contextInfo: {
-                        forwardingScore: 5,
-                        isForwarded: true,
-                        forwardedNewsletterMessageInfo: {
-                            newsletterJid: '120363302677217436@newsletter', 
-                            newsletterName: "CRYPTIX-MD",
-                            serverMessageId: 143
-                        }
-                    }
-                };
-                
-                await Matrix.sendMessage('254105521300@s.whatsapp.net', successMessage);
-            } catch (error) {
-                // Silent error handling
-            }
-        }
-    } catch (err) {
-        // Send error message to owner if configured
-        if ('254105521300') {
-            try {
-                await Matrix.sendMessage('254105521300@s.whatsapp.net', {
-                    text: `Failed to join group with invite code`,
-                });
-            } catch (error) {
-                // Silent error handling
-            }
-        }
-    }
-}
- 
-async function init() {
-    try {
-        if (fs.existsSync(credsPath)) {
-            await start();
-        } else {
-            const sessionDownloaded = await downloadSessionData();
-         
-   if (sessionDownloaded) {
-                await start();
-            } else {
-                useQR = true;
-                await start();
-            }
-        }
-    } catch (error) {
-        setTimeout(init, 5000);
-    }
-}
-
-init();
-
-app.get('/', (req, res) => {
-    res.send('╭──[ hello user ]─\n│🤗 hi your bot is live \n╰──────────────!');
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+            "12036
