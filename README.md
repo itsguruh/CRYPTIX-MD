@@ -47,7 +47,7 @@
 #### 𝐒𝐄𝐓𝐔𝐏
 
 1. 𝐆𝐄𝐓 𝐒𝐄𝐒𝐒𝐈𝐎𝐍 𝐈𝐃 𝐅𝐑𝐎𝐌 𝐒𝐄𝐑𝐕𝐄𝐑  
-<a href="https://cryptix-md-3210ab63a8e2.herokuapp.com/"><img title="GET-SESSION ID HERE" src="https://img.shields.io/badge/GET-SESSION ID HERE-h?color=green&style=for-the-badge&logo=nike" width="230" height="38.45"/></a></p>  
+<a href="https://cryptix10-c733f0aa9b30.herokuapp.com/"><img title="GET-SESSION ID HERE" src="https://img.shields.io/badge/GET-SESSION ID HERE-h?color=green&style=for-the-badge&logo=nike" width="230" height="38.45"/></a></p>  
 
 2. 𝐆𝐄𝐍𝐄𝐑𝐀𝐓𝐄 𝐏𝐀𝐈𝐑𝐈𝐍𝐆 𝐂𝐎𝐃𝐄  
 <p align="center">
