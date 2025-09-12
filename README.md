@@ -1,6 +1,7 @@
 <p align="center">
   <img src="https://i.imgur.com/dBaSKWF.gif" height="40" width="100%">
 </p>
+
 <h1 align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=30&duration=3000&color=F44336&background=000000&center=true&vCenter=true&width=600&lines=⚡+CRYPTIX+MD;✨+The+Most+Powerful+WhatsApp+Bot;💻+Crafted+by+Official+Guru;🚀+Next-Gen+Technology;💧+Fast+⚡+Secure+🔒+Reliable+✅" alt="Typing Animation">
 </h1>
@@ -61,7 +62,7 @@ The fastest way to get your own instance of **CRYPTIX MD** running is through He
 
 ### 2. **Generate Your Pairing Code**
 <p align="center">
-  <a href="https://cryptix10-c733f0aa9b30.herokuapp.com/">
+  <a href="https://cryptixzessions-11b67e7d3fdf.herokuapp.com/">
     <img src="https://img.shields.io/badge/GET-PAIRING_CODE-h?color=2196F3&style=for-the-badge&logo=whatsapp" width="230" height="38.45"/>
   </a>
 </p>
@@ -82,6 +83,7 @@ Connect with our community for support, updates, and more.
 </p>
 
 ---
+
 <p align="center">
   <a href="https://github.com/itsguruh" target="_blank">
     <img src="https://user-images.githubusercontent.com/62628408/195156322-a9b0c722-e4d0-449e-8c31-645391500300.gif" alt="Creator: Official Guru" height="30" />
