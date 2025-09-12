@@ -1,35 +1,44 @@
-import makeWASocket from '@whiskeysockets/baileys';
-import { useSingleFileAuthState } from '@whiskeysockets/baileys/lib/useSingleFileAuthState.js';
-import { DisconnectReason } from '@whiskeysockets/baileys';
+// data/index.js
+import makeWASocket, { useMultiFileAuthState, DisconnectReason } from '@whiskeysockets/baileys';
 import pino from 'pino';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const { state, saveState } = useSingleFileAuthState('./auth_info.json');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-function startSock() {
+// folder to store auth credentials
+const authFolder = path.join(__dirname, '../auth_info');  
+
+async function startSock() {
+  const { state, saveCreds } = await useMultiFileAuthState(authFolder);
+
   const sock = makeWASocket({
-    logger: pino({ level: 'silent' }),
     auth: state,
+    logger: pino({ level: 'silent' }),
+    // optionally: print QR in terminal, useful when testing locally
+    // printQRInTerminal: true,
   });
 
   sock.ev.on('connection.update', (update) => {
     const { connection, lastDisconnect } = update;
-    if(connection === 'close') {
-      const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
-      console.log('Connection closed due to', lastDisconnect?.error, ', reconnecting:', shouldReconnect);
-      if(shouldReconnect) {
+    console.log('Connection update:', connection);
+    if (connection === 'close') {
+      const statusCode = lastDisconnect?.error?.output?.statusCode;
+      const shouldReconnect = statusCode !== DisconnectReason.loggedOut;
+      console.log('Connection closed. Reconnect?', shouldReconnect);
+      if (shouldReconnect) {
         startSock();
       }
-    } else if(connection === 'open') {
+    } else if (connection === 'open') {
       console.log('Connected to WhatsApp');
     }
   });
 
-  sock.ev.on('creds.update', saveState);
+  sock.ev.on('creds.update', saveCreds);
 
   return sock;
 }
 
-// Start the socket connection
-const sock = startSock();
-
-export default sock;
+const sockPromise = startSock();
+export default sockPromise;
