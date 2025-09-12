@@ -1,5 +1,6 @@
-// data/index.js
-import makeWASocket, { useSingleFileAuthState, DisconnectReason } from '@whiskeysockets/baileys';
+import makeWASocket from '@whiskeysockets/baileys';
+import { useSingleFileAuthState } from '@whiskeysockets/baileys/lib/useSingleFileAuthState.js';
+import { DisconnectReason } from '@whiskeysockets/baileys';
 import pino from 'pino';
 
 const { state, saveState } = useSingleFileAuthState('./auth_info.json');
