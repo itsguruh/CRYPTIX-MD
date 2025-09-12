@@ -1,44 +1,32 @@
 // data/index.js
-import makeWASocket, { useMultiFileAuthState, DisconnectReason } from '@whiskeysockets/baileys';
+import makeWASocket, {
+  useMultiFileAuthState,
+  DisconnectReason
+} from '@whiskeysockets/baileys';
 import pino from 'pino';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// folder to store auth credentials
-const authFolder = path.join(__dirname, '../auth_info');  
-
-async function startSock() {
-  const { state, saveCreds } = await useMultiFileAuthState(authFolder);
+async function startSocket() {
+  const { state, saveCreds } = await useMultiFileAuthState('./auth_info');
 
   const sock = makeWASocket({
-    auth: state,
     logger: pino({ level: 'silent' }),
-    // optionally: print QR in terminal, useful when testing locally
-    // printQRInTerminal: true,
+    auth: state
   });
 
   sock.ev.on('connection.update', (update) => {
     const { connection, lastDisconnect } = update;
-    console.log('Connection update:', connection);
     if (connection === 'close') {
-      const statusCode = lastDisconnect?.error?.output?.statusCode;
-      const shouldReconnect = statusCode !== DisconnectReason.loggedOut;
-      console.log('Connection closed. Reconnect?', shouldReconnect);
+      const shouldReconnect = (lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut);
+      console.log('❌ Disconnected:', lastDisconnect?.error, '| Reconnecting:', shouldReconnect);
       if (shouldReconnect) {
-        startSock();
+        startSocket();
       }
     } else if (connection === 'open') {
-      console.log('Connected to WhatsApp');
+      console.log('✅ Connected to WhatsApp');
     }
   });
 
   sock.ev.on('creds.update', saveCreds);
-
-  return sock;
 }
 
-const sockPromise = startSock();
-export default sockPromise;
+export default startSocket;
