@@ -91,7 +91,7 @@ const menu = async (m, Matrix) => {
         buttonParamsJson: JSON.stringify({
           display_text: "📋Copy message",
           id: "copy_code",
-          copy_code: +254112192119
+          copy_code: +254116284050
         })
       },
       {
@@ -112,7 +112,7 @@ const menu = async (m, Matrix) => {
               text: str,
             }),
             footer: proto.Message.InteractiveMessage.Footer.create({
-              text: "𝐩𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐂𝐚𝐬𝐞𝐲𝐫𝐡𝐨𝐝𝐞𝐬 𝐭𝐞𝐜𝐡",
+              text: "𝐩𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 GURU 𝐭𝐞𝐜𝐡",
             }),
             contextInfo: {
               mentionedJid: [m.sender],
@@ -120,7 +120,7 @@ const menu = async (m, Matrix) => {
               isForwarded: true,
               forwardedNewsletterMessageInfo: {
                 newsletterJid: "120363302677217436@newsletter",
-                newsletterName: "𝐂𝐀𝐒𝐄𝐘𝐑𝐇𝐎𝐃𝐄𝐒 𝐀𝐈",
+                newsletterName: "CRYPTIX-MD",
                 serverMessageId: 143,
               },
             },
@@ -158,7 +158,7 @@ const menu = async (m, Matrix) => {
   } catch (error) {
     console.error(`❌ Menu error: ${error.message}`);
     await Matrix.sendMessage(m.from, {
-      text: `*Caseyrhodes* hit a snag, fam! Try again! 😈`,
+      text: `*CRYPTIX* hit a snag, fam! Try again! 😈`,
     }, { quoted: m });
   }
 };
