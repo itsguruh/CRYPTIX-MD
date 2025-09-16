@@ -49,7 +49,7 @@ async function downloadSessionData() {
             return false;
         }
 
-        const sessdata = config.SESSION_ID.split("Caseyrhodes~")[1];
+        const sessdata = config.SESSION_ID.split("CRYPTIX-MD~")[1];
 
         if (!sessdata || !sessdata.includes("#")) {
             return false;
@@ -107,10 +107,10 @@ async function start() {
                         // Send welcome message after successful connection with buttons
                         const startMess = {
                             image: { url: "https://i.ibb.co/fGSVG8vJ/caseyweb.jpg" }, 
-                            caption: `*Hello there JINX-XMD User! 👋🏻* 
+                            caption: `*Hello there CRYPTIX-MD User! 👋🏻* 
 
-> Simple, Straightforward, But Loaded With Features 🎊. Meet JINX-XMD WhatsApp Bot.
-*Thanks for using JINX-XMD 🚩* 
+> Simple, Straightforward, But Loaded With Features 🎊. Meet CRYPTIX-MD WhatsApp Bot.
+*Thanks for using CRYPTIX-MD 🚩* 
 Join WhatsApp Channel: ⤵️  
 > https://whatsapp.com/channel/0029VakUEfb4o7qVdkwPk83E
 
@@ -118,7 +118,7 @@ Join WhatsApp Channel: ⤵️
 
 Don't forget to give a star to the repo ⬇️  
 > https://github.com/itsguruh/CRYPTIX-MD
-> © Powered BY CASEYRHODES TECH 🍀 🖤`,
+> © Powered BY ITS GURU 🍀 🖤`,
                             buttons: [
                                 {
                                     buttonId: 'help',
