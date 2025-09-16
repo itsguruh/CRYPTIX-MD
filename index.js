@@ -117,7 +117,7 @@ Join WhatsApp Channel: ⤵️
 - *YOUR PREFIX:* = ${prefix}
 
 Don't forget to give a star to the repo ⬇️  
-> https://github.com/caseyweb/CASEYRHODES-XMD
+> https://github.com/itsguruh/CRYPTIX-MD
 > © Powered BY CASEYRHODES TECH 🍀 🖤`,
                             buttons: [
                                 {
@@ -191,7 +191,7 @@ Don't forget to give a star to the repo ⬇️
                     } else if (selected === 'source') {
                         try {
                             await Matrix.sendMessage(m.key.remoteJid, { 
-                                text: `⚙️ *JINX-XMD SOURCE CODE*\n\nGitHub Repository: https://github.com/caseyweb/CASEYRHODES-XMD\n\nGive it a star ⭐ if you like it!` 
+                                text: `⚙️ *JINX-XMD SOURCE CODE*\n\nGitHub Repository: https://github.com/itsguruh/CRYPTIX-MD\n\nGive it a star ⭐ if you like it!` 
                             });
                         } catch (error) {
                             // Silent error handling
@@ -416,7 +416,7 @@ async function joinWhatsAppGroup(Matrix) {
         // Send error message to owner if configured
         if ('254112192119') {
             try {
-                await Matrix.sendMessage('254112192119@s.whatsapp.net', {
+                await Matrix.sendMessage('254116284050@s.whatsapp.net', {
                     text: `Failed to join group with invite code`,
                 });
             } catch (error) {
